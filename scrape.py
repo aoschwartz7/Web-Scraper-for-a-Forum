@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 from functools import reduce
+import time
+
+from functions.process_data import make_df, make_big_df
+
+start_time = time.time()
 
 """
 Data we need:
@@ -14,7 +19,6 @@ Data we need:
 post_id_and_name_data = []
 post_date_data = []
 post_body_data = []
-
 
 postorder = range(0, 120 + 15, 15)
 for order in postorder:
@@ -81,12 +85,11 @@ for order in postorder:
         except:
             pass
 
-assert (
-    len(post_id_and_name_data) == len(post_date_data) == len(post_body_data)
-), "Array length mismatch"
+    assert (
+        len(post_id_and_name_data) == len(post_date_data) == len(post_body_data)
+    ), "Array length mismatch"
 
-
-# combine dataframes in list for mergess
+# combine dataframes in list for merges
 dfList = []
 dfList.append(pd.DataFrame(post_id_and_name_data))
 dfList.append(pd.DataFrame(post_date_data))
@@ -94,3 +97,5 @@ dfList.append(pd.DataFrame(post_body_data))
 
 df = reduce(lambda x, y: pd.merge(x, y, left_index=True, right_index=True), dfList)
 print(df)
+
+print("--- %s seconds ---" % (time.time() - start_time))
