@@ -1,11 +1,10 @@
 import pandas as pd
+from functools import reduce
 
 
-# class ProcessData:
-#     def __init__(self) -> None:
-#         pass
-
-#     def ake
+def flatten_data_lists(data: list[list[dict]]) -> list[dict]:
+    flat_list = [item for sublist in data for item in sublist]
+    return flat_list
 
 
 def make_df(data: list[dict]) -> pd.DataFrame:
